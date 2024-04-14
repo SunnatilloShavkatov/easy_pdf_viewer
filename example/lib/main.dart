@@ -7,7 +7,7 @@ import "package:flutter/material.dart";
 void main() => runApp(const App());
 
 class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) => const MaterialApp(
@@ -16,7 +16,7 @@ class App extends StatelessWidget {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key, this.progressExample = false}) : super(key: key);
+  const MyApp({super.key, this.progressExample = false});
 
   final bool progressExample;
 

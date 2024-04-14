@@ -72,7 +72,6 @@ analyzer:
     prefer_adjacent_string_concatenation: error
     prefer_equal_for_default_values: error
     prefer_if_null_operators: error
-    parameter_assignments: error
     prefer_asserts_with_message: error
     prefer_const_constructors: error
     prefer_const_constructors_in_immutables: error
@@ -309,7 +308,6 @@ linter:
     - package_api_docs
     - package_names
     - package_prefixed_library_names
-    - parameter_assignments
     - prefer_adjacent_string_concatenation
     - prefer_asserts_in_initializer_lists
     - prefer_asserts_with_message
