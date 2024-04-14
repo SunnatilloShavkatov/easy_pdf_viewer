@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:numberpicker/numberpicker.dart';
+import "package:flutter/material.dart";
+import "package:numberpicker/numberpicker.dart";
 
 class PagePicker extends StatefulWidget {
-  PagePicker({
+  const PagePicker({
+    super.key,
     required this.title,
     required this.maxValue,
     required this.initialValue,
@@ -15,7 +16,7 @@ class PagePicker extends StatefulWidget {
   final Widget? numberPickerConfirmWidget;
 
   @override
-  _PagePickerState createState() => _PagePickerState();
+  State<PagePicker> createState() => _PagePickerState();
 }
 
 class _PagePickerState extends State<PagePicker> {
@@ -28,21 +29,19 @@ class _PagePickerState extends State<PagePicker> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text(widget.title),
-      content: NumberPicker(
-        minValue: 1,
-        maxValue: widget.maxValue!,
-        value: _currentValue!,
-        onChanged: (value) => setState(() => _currentValue = value),
-      ),
-      actions: [
-        TextButton(
-          child: widget.numberPickerConfirmWidget ?? Text('OK'),
-          onPressed: () => Navigator.of(context).pop(_currentValue),
+  Widget build(BuildContext context) => AlertDialog(
+        title: Text(widget.title),
+        content: NumberPicker(
+          minValue: 1,
+          maxValue: widget.maxValue!,
+          value: _currentValue!,
+          onChanged: (int value) => setState(() => _currentValue = value),
         ),
-      ],
-    );
-  }
+        actions: <Widget>[
+          TextButton(
+            child: widget.numberPickerConfirmWidget ?? const Text("OK"),
+            onPressed: () => Navigator.of(context).pop(_currentValue),
+          ),
+        ],
+      );
 }

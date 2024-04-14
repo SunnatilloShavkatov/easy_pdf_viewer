@@ -1,8 +1,10 @@
-import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
-import 'package:flutter/material.dart';
+// ignore_for_file: avoid_annotating_with_dynamic
+
+import "package:easy_pdf_viewer/easy_pdf_viewer.dart";
+import "package:flutter/material.dart";
 
 class WithProgress extends StatefulWidget {
-  WithProgress({Key? key}) : super(key: key);
+  const WithProgress({Key? key}) : super(key: key);
 
   @override
   State<WithProgress> createState() => _WithProgressState();
@@ -26,17 +28,17 @@ class _WithProgressState extends State<WithProgress> {
     }
   }
 
-  void loadDocument() async {
+  Future<void> loadDocument() async {
     /// Clears the cache before download, so [PDFDocument.fromURLWithDownloadProgress.downloadProgress()]
     /// is always executed (meant only for testing).
     await DefaultCacheManager().emptyCache();
 
     PDFDocument.fromURLWithDownloadProgress(
-      'https://www.africau.edu/images/default/sample.pdf',
-      downloadProgress: (downloadProgress) => setState(() {
+      "https://www.africau.edu/images/default/sample.pdf",
+      downloadProgress: (DownloadProgress downloadProgress) => setState(() {
         this.downloadProgress = downloadProgress;
       }),
-      onDownloadComplete: (document) => setState(() {
+      onDownloadComplete: (PDFDocument document) => setState(() {
         this.document = document;
         _isLoading = false;
       }),
@@ -44,31 +46,35 @@ class _WithProgressState extends State<WithProgress> {
   }
 
   Widget buildProgress() {
-    if (downloadProgress == null) return SizedBox();
+    if (downloadProgress == null) {
+      return const SizedBox();
+    }
 
     String parseBytesToKBs(int? bytes) {
-      if (bytes == null) return '0 KBs';
+      if (bytes == null) {
+        return "0 KBs";
+      }
 
-      return '${(bytes / 1000).toStringAsFixed(2)} KBs';
+      return "${(bytes / 1000).toStringAsFixed(2)} KBs";
     }
 
     String progressString = parseBytesToKBs(downloadProgress!.downloaded);
     if (downloadProgress!.totalSize != null) {
-      progressString += '/ ${parseBytesToKBs(downloadProgress!.totalSize)}';
+      progressString += "/ ${parseBytesToKBs(downloadProgress!.totalSize)}";
     }
 
     return Column(
-      children: [
-        SizedBox(height: 20),
+      children: <Widget>[
+        const SizedBox(height: 20),
         Text(progressString),
       ],
     );
   }
 
-  changePDF(value) async {
+  Future<void> changePDF(dynamic value) async {
     setState(() => _isLoading = true);
     if (value == 1) {
-      document = await PDFDocument.fromAsset('assets/sample2.pdf');
+      document = await PDFDocument.fromAsset("assets/sample2.pdf");
     } else if (value == 2) {
       document = await PDFDocument.fromURL(
         "https://www.africau.edu/images/default/sample.pdf",
@@ -82,43 +88,42 @@ class _WithProgressState extends State<WithProgress> {
         ), */
       );
     } else {
-      document = await PDFDocument.fromAsset('assets/sample.pdf');
+      document = await PDFDocument.fromAsset("assets/sample.pdf");
     }
     setState(() => _isLoading = false);
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       drawer: Drawer(
         child: Column(
           children: <Widget>[
-            SizedBox(height: 36),
+            const SizedBox(height: 36),
             ListTile(
-              title: Text('Load from Assets'),
+              title: const Text("Load from Assets"),
               onTap: () {
                 changePDF(1);
               },
             ),
             ListTile(
-              title: Text('Load from URL'),
+              title: const Text("Load from URL"),
               onTap: () {
                 changePDF(2);
               },
             ),
             ListTile(
-              title: Text('Restore default'),
+              title: const Text("Restore default"),
               onTap: () {
                 changePDF(3);
               },
             ),
             ListTile(
-              title: Text('With Progress'),
+              title: const Text("With Progress"),
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => WithProgress(),
+                    builder: (BuildContext context) => const WithProgress(),
                   ),
                 );
               },
@@ -127,15 +132,15 @@ class _WithProgressState extends State<WithProgress> {
         ),
       ),
       appBar: AppBar(
-        title: const Text('PDFViewer'),
+        title: const Text("PDFViewer"),
       ),
       body: SafeArea(
         child: _isLoading
             ? Center(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: [
-                    CircularProgressIndicator(),
+                  children: <Widget>[
+                    const CircularProgressIndicator(),
                     buildProgress(),
                   ],
                 ),
@@ -148,5 +153,4 @@ class _WithProgressState extends State<WithProgress> {
               ),
       ),
     );
-  }
 }

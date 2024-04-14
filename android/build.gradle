@@ -4,18 +4,18 @@ version '1.0.7'
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0'
+        classpath 'com.android.tools.build:gradle:8.1.4'
     }
 }
 
 rootProject.allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 }
 
@@ -23,9 +23,9 @@ apply plugin: 'com.android.library'
 
 android {
     namespace "dev.kaichi.easy_pdf_viewer"
-    compileSdkVersion 30
+    compileSdk 34
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 24
     }
 }
