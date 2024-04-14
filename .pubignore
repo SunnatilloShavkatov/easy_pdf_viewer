@@ -10,3 +10,6 @@ build/
 /example/android/.settings/
 /example/ios/Podfile.lock
 /example/pubspec.lock
+/android/.settings/
+/android/.classpath
+/android/.project
