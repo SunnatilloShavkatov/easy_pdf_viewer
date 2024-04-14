@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="dev.kaichi.easy_pdf_viewer_example">
+    package="com.aboutkai.easy_pdf_viewer_example">
 
     <application
         android:icon="@mipmap/ic_launcher"

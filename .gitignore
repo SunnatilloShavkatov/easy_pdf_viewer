@@ -13,3 +13,5 @@ build/
 /android/.classpath
 /android/.project
 /android/.gradle/
+/.flutter-plugins
+/.flutter-plugins-dependencies

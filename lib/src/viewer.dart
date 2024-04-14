@@ -384,8 +384,6 @@ class _PDFViewerState extends State<PDFViewer> {
                       ],
                     ),
                   )
-            : Container(
-                height: 0,
-              ),
+            : const SizedBox.shrink(),
       );
 }

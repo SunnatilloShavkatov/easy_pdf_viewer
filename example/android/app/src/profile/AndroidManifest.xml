@@ -1,7 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="dev.kaichi.easy_pdf_viewer_example">
-    <!-- Flutter needs it to communicate with the running application
-         to allow setting breakpoints, to provide hot reload, etc.
-    -->
+    package="com.aboutkai.easy_pdf_viewer_example">
+
     <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
