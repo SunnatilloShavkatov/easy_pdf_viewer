@@ -10,15 +10,11 @@ class App extends StatelessWidget {
   const App({super.key});
 
   @override
-  Widget build(BuildContext context) => const MaterialApp(
-        home: MyApp(),
-      );
+  Widget build(BuildContext context) => const MaterialApp(home: MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key, this.progressExample = false});
-
-  final bool progressExample;
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();

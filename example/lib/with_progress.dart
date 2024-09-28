@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_annotating_with_dynamic
+// ignore_for_file: avoid_annotating_with_dynamic, discarded_futures
 
 import "package:easy_pdf_viewer/easy_pdf_viewer.dart";
 import "package:flutter/material.dart";
@@ -29,7 +29,8 @@ class _WithProgressState extends State<WithProgress> {
   }
 
   Future<void> loadDocument() async {
-    /// Clears the cache before download, so [PDFDocument.fromURLWithDownloadProgress.downloadProgress()]
+    /// Clears the cache before download, so
+    /// [PDFDocument.fromURLWithDownloadProgress.downloadProgress()]
     /// is always executed (meant only for testing).
     await DefaultCacheManager().emptyCache();
 
@@ -122,7 +123,7 @@ class _WithProgressState extends State<WithProgress> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
+                  MaterialPageRoute<void>(
                     builder: (BuildContext context) => const WithProgress(),
                   ),
                 );

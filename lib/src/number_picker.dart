@@ -62,7 +62,8 @@ class NumberPicker extends StatefulWidget {
   /// Style of non-selected numbers. If null, it uses Theme's bodyText2
   final TextStyle? textStyle;
 
-  /// Style of non-selected numbers. If null, it uses Theme's headline5 with accentColor
+  /// Style of non-selected numbers. If null, it uses
+  /// Theme's headline5 with accentColor
   final TextStyle? selectedTextStyle;
 
   /// Whether to trigger haptic pulses or not
@@ -116,7 +117,7 @@ class _NumberPickerState extends State<NumberPicker> {
         HapticFeedback.selectionClick();
       }
     }
-    Future.delayed(
+    Future<void>.delayed(
       const Duration(milliseconds: 100),
       _maybeCenterValue,
     );
@@ -158,7 +159,7 @@ class _NumberPickerState extends State<NumberPicker> {
         child: NotificationListener<ScrollEndNotification>(
           onNotification: (ScrollEndNotification not) {
             if (not.dragDetails?.primaryVelocity == 0) {
-              Future.microtask(_maybeCenterValue);
+              Future<void>.microtask(_maybeCenterValue);
             }
             return true;
           },
