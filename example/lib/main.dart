@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_annotating_with_dynamic, discarded_futures
+import "dart:async";
 
 import "package:easy_pdf_viewer/easy_pdf_viewer.dart";
 import "package:easy_pdf_viewer_example/with_progress.dart";
@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    loadDocument();
+    unawaited(loadDocument());
   }
 
   Future<void> loadDocument() async {
@@ -36,22 +36,12 @@ class _MyAppState extends State<MyApp> {
     setState(() => _isLoading = false);
   }
 
-  Future<void> changePDF(dynamic value) async {
+  Future<void> changePDF(int value) async {
     setState(() => _isLoading = true);
     if (value == 1) {
       document = await PDFDocument.fromAsset("assets/sample2.pdf");
     } else if (value == 2) {
-      document = await PDFDocument.fromURL(
-        "https://www.africau.edu/images/default/sample.pdf",
-
-        /* cacheManager: CacheManager(
-          Config(
-            "customCacheKey",
-            stalePeriod: const Duration(days: 2),
-            maxNrOfCacheObjects: 10,
-          ),
-        ), */
-      );
+      document = await PDFDocument.fromURL("https://www.africau.edu/images/default/sample.pdf");
     } else {
       document = await PDFDocument.fromAsset("assets/sample.pdf");
     }
@@ -66,26 +56,26 @@ class _MyAppState extends State<MyApp> {
               const SizedBox(height: 36),
               ListTile(
                 title: const Text("Load from Assets"),
-                onTap: () {
-                  changePDF(1);
+                onTap: () async {
+                  await changePDF(1);
                 },
               ),
               ListTile(
                 title: const Text("Load from URL"),
-                onTap: () {
-                  changePDF(2);
+                onTap: () async {
+                  await changePDF(2);
                 },
               ),
               ListTile(
                 title: const Text("Restore default"),
-                onTap: () {
-                  changePDF(3);
+                onTap: () async {
+                  await changePDF(3);
                 },
               ),
               ListTile(
                 title: const Text("With Progress"),
-                onTap: () {
-                  Navigator.push(
+                onTap: () async {
+                  await Navigator.push(
                     context,
                     MaterialPageRoute<void>(
                       builder: (BuildContext context) => const WithProgress(),
@@ -96,9 +86,7 @@ class _MyAppState extends State<MyApp> {
             ],
           ),
         ),
-        appBar: AppBar(
-          title: const Text("PDFViewer"),
-        ),
+        appBar: AppBar(title: const Text("PDFViewer")),
         body: Center(
           child: _isLoading
               ? const Center(child: CircularProgressIndicator())
@@ -106,9 +94,7 @@ class _MyAppState extends State<MyApp> {
                   document: document,
                   lazyLoad: false,
                   zoomSteps: 1,
-                  numberPickerConfirmWidget: const Text(
-                    "Confirm",
-                  ),
+                  numberPickerConfirmWidget: const Text("Confirm"),
                 ),
         ),
       );
