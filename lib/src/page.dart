@@ -55,24 +55,30 @@ class _PDFPageState extends State<PDFPage> {
 
   void _repaint() {
     provider = FileImage(File(widget.imgPath!));
-    final ImageStream resolver =
-        provider.resolve(createLocalImageConfiguration(context))
-          ..addListener(
-            ImageStreamListener((ImageInfo imgInfo, bool alreadyPainted) {
-              if (mounted && !alreadyPainted) {
-                setState(() {});
-              }
-            }),
-          );
+    final ImageStream resolver = provider.resolve(createLocalImageConfiguration(context))
+      ..addListener(
+        ImageStreamListener((ImageInfo imgInfo, bool alreadyPainted) {
+          if (mounted && !alreadyPainted) {
+            setState(() {});
+          }
+        }),
+      );
   }
 
   @override
   Widget build(BuildContext context) => ZoomableWidget(
         onZoomChanged: widget.onZoomChanged,
         zoomSteps: widget.zoomSteps,
-        minScale: widget.minScale,
-        panLimit: widget.panLimit,
-        maxScale: widget.maxScale,
-        child: Image(image: provider),
+        panLimit: widget.panLimit / MediaQuery.devicePixelRatioOf(context),
+        minScale: widget.minScale / MediaQuery.devicePixelRatioOf(context),
+        maxScale: widget.maxScale / MediaQuery.devicePixelRatioOf(context),
+        child: LayoutBuilder(
+          builder: (_, BoxConstraints constraints) => Image.file(
+            File(widget.imgPath!),
+            cacheWidth: (constraints.maxWidth * MediaQuery.devicePixelRatioOf(context)).toInt(),
+            cacheHeight: (constraints.maxHeight * MediaQuery.devicePixelRatioOf(context)).toInt(),
+            fit: BoxFit.contain,
+          ),
+        ),
       );
 }
