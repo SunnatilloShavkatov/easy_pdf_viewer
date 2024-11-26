@@ -69,9 +69,9 @@ class _PDFPageState extends State<PDFPage> {
   Widget build(BuildContext context) => ZoomableWidget(
         onZoomChanged: widget.onZoomChanged,
         zoomSteps: widget.zoomSteps,
-        panLimit: widget.panLimit / MediaQuery.devicePixelRatioOf(context),
-        minScale: widget.minScale / MediaQuery.devicePixelRatioOf(context),
-        maxScale: widget.maxScale / MediaQuery.devicePixelRatioOf(context),
+        panLimit: widget.panLimit,
+        minScale: widget.minScale,
+        maxScale: widget.maxScale,
         child: LayoutBuilder(
           builder: (_, BoxConstraints constraints) => Image.file(
             File(widget.imgPath!),
