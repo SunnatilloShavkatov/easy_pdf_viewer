@@ -72,13 +72,6 @@ class _PDFPageState extends State<PDFPage> {
         panLimit: widget.panLimit,
         minScale: widget.minScale,
         maxScale: widget.maxScale,
-        child: LayoutBuilder(
-          builder: (_, BoxConstraints constraints) => Image.file(
-            File(widget.imgPath!),
-            cacheWidth: (constraints.maxWidth * MediaQuery.devicePixelRatioOf(context)).toInt(),
-            cacheHeight: (constraints.maxHeight * MediaQuery.devicePixelRatioOf(context)).toInt(),
-            fit: BoxFit.contain,
-          ),
-        ),
+        child: Image(image: provider),
       );
 }
