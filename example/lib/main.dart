@@ -2,12 +2,10 @@ import "dart:async";
 
 import "package:easy_pdf_viewer/easy_pdf_viewer.dart";
 import "package:easy_pdf_viewer_example/with_progress.dart";
-import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 
 void main() {
   /// debugInvertOversizedImages
-  debugInvertOversizedImages = kDebugMode;
   runApp(const App());
 }
 

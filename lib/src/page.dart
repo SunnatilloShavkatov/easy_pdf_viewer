@@ -54,6 +54,9 @@ class _PDFPageState extends State<PDFPage> {
   }
 
   void _repaint() {
+    if (widget.imgPath == null) {
+      return;
+    }
     provider = FileImage(File(widget.imgPath!));
     final ImageStream resolver = provider.resolve(createLocalImageConfiguration(context))
       ..addListener(
