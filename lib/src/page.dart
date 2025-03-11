@@ -1,5 +1,3 @@
-// ignore_for_file: unused_local_variable
-
 import "dart:io";
 import "package:easy_pdf_viewer/src/zoomable_widget.dart";
 import "package:flutter/widgets.dart";
@@ -37,7 +35,7 @@ class PDFPage extends StatefulWidget {
 }
 
 class _PDFPageState extends State<PDFPage> {
-  late ImageProvider provider;
+  ImageProvider? provider;
 
   @override
   void didChangeDependencies() {
@@ -58,14 +56,13 @@ class _PDFPageState extends State<PDFPage> {
       return;
     }
     provider = FileImage(File(widget.imgPath!));
-    final ImageStream resolver = provider.resolve(createLocalImageConfiguration(context))
-      ..addListener(
-        ImageStreamListener((ImageInfo imgInfo, bool alreadyPainted) {
-          if (mounted && !alreadyPainted) {
-            setState(() {});
-          }
-        }),
-      );
+    provider?.resolve(createLocalImageConfiguration(context)).addListener(
+      ImageStreamListener((ImageInfo imgInfo, bool alreadyPainted) {
+        if (mounted && !alreadyPainted) {
+          setState(() {});
+        }
+      }),
+    );
   }
 
   @override
@@ -75,6 +72,6 @@ class _PDFPageState extends State<PDFPage> {
         panLimit: widget.panLimit,
         minScale: widget.minScale,
         maxScale: widget.maxScale,
-        child: Image(image: provider),
+        child: provider == null ? const SizedBox.shrink() : Image(image: provider!),
       );
 }

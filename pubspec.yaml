@@ -4,8 +4,8 @@ version: 1.1.0
 homepage: https://github.com/SunnatilloShavkatov/easy_pdf_viewer.git
 
 environment:
-  sdk: ">=3.5.0 <4.0.0"
-  flutter: ">=3.24.0"
+  sdk: ">=3.7.0 <4.0.0"
+  flutter: ">=3.29.0"
 
 dependencies:
   flutter:
