@@ -14,9 +14,9 @@ dependencies:
   path_provider: ^2.1.5
 
 dev_dependencies:
-  flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
+  analysis_lints: ^1.0.1
 
 flutter:
   plugin:

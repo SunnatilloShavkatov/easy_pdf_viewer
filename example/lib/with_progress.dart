@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_annotating_with_dynamic, discarded_futures
 
-import "package:easy_pdf_viewer/easy_pdf_viewer.dart";
-import "package:flutter/material.dart";
+import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
+import 'package:flutter/material.dart';
 
 class WithProgress extends StatefulWidget {
   const WithProgress({super.key});
@@ -35,7 +35,7 @@ class _WithProgressState extends State<WithProgress> {
     await DefaultCacheManager().emptyCache();
 
     PDFDocument.fromURLWithDownloadProgress(
-      "https://www.africau.edu/images/default/sample.pdf",
+      'https://www.africau.edu/images/default/sample.pdf',
       downloadProgress: (DownloadProgress downloadProgress) => setState(() {
         this.downloadProgress = downloadProgress;
       }),
@@ -53,15 +53,15 @@ class _WithProgressState extends State<WithProgress> {
 
     String parseBytesToKBs(int? bytes) {
       if (bytes == null) {
-        return "0 KBs";
+        return '0 KBs';
       }
 
-      return "${(bytes / 1000).toStringAsFixed(2)} KBs";
+      return '${(bytes / 1000).toStringAsFixed(2)} KBs';
     }
 
     String progressString = parseBytesToKBs(downloadProgress!.downloaded);
     if (downloadProgress!.totalSize != null) {
-      progressString += "/ ${parseBytesToKBs(downloadProgress!.totalSize)}";
+      progressString += '/ ${parseBytesToKBs(downloadProgress!.totalSize)}';
     }
 
     return Column(children: <Widget>[const SizedBox(height: 20), Text(progressString)]);
@@ -70,11 +70,11 @@ class _WithProgressState extends State<WithProgress> {
   Future<void> changePDF(int value) async {
     setState(() => _isLoading = true);
     if (value == 1) {
-      document = await PDFDocument.fromAsset("assets/sample2.pdf");
+      document = await PDFDocument.fromAsset('assets/sample2.pdf');
     } else if (value == 2) {
-      document = await PDFDocument.fromURL("https://www.africau.edu/images/default/sample.pdf");
+      document = await PDFDocument.fromURL('https://www.africau.edu/images/default/sample.pdf');
     } else {
-      document = await PDFDocument.fromAsset("assets/sample.pdf");
+      document = await PDFDocument.fromAsset('assets/sample.pdf');
     }
     setState(() => _isLoading = false);
   }
@@ -86,25 +86,25 @@ class _WithProgressState extends State<WithProgress> {
             children: <Widget>[
               const SizedBox(height: 36),
               ListTile(
-                title: const Text("Load from Assets"),
+                title: const Text('Load from Assets'),
                 onTap: () {
                   changePDF(1);
                 },
               ),
               ListTile(
-                title: const Text("Load from URL"),
+                title: const Text('Load from URL'),
                 onTap: () {
                   changePDF(2);
                 },
               ),
               ListTile(
-                title: const Text("Restore default"),
+                title: const Text('Restore default'),
                 onTap: () {
                   changePDF(3);
                 },
               ),
               ListTile(
-                title: const Text("With Progress"),
+                title: const Text('With Progress'),
                 onTap: () {
                   Navigator.push(
                     context,
@@ -118,7 +118,7 @@ class _WithProgressState extends State<WithProgress> {
           ),
         ),
         appBar: AppBar(
-          title: const Text("PDFViewer"),
+          title: const Text('PDFViewer'),
         ),
         body: SafeArea(
           child: _isLoading
@@ -134,7 +134,7 @@ class _WithProgressState extends State<WithProgress> {
               : PDFViewer(
                   document: document,
                   numberPickerConfirmWidget: const Text(
-                    "Confirm",
+                    'Confirm',
                   ),
                 ),
         ),

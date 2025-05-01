@@ -1,5 +1,5 @@
-import "package:easy_pdf_viewer/src/number_picker.dart";
-import "package:flutter/material.dart";
+import 'package:easy_pdf_viewer/src/number_picker.dart';
+import 'package:flutter/material.dart';
 
 class PagePicker extends StatefulWidget {
   const PagePicker({
@@ -30,18 +30,19 @@ class _PagePickerState extends State<PagePicker> {
 
   @override
   Widget build(BuildContext context) => AlertDialog(
-        title: Text(widget.title),
-        content: NumberPicker(
-          minValue: 1,
-          maxValue: widget.maxValue!,
-          value: _currentValue!,
-          onChanged: (int value) => setState(() => _currentValue = value),
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: widget.numberPickerConfirmWidget ?? const Text("OK"),
-            onPressed: () => Navigator.of(context).pop(_currentValue),
-          ),
-        ],
-      );
+    title: Text(widget.title),
+    content: NumberPicker(
+      minValue: 1,
+      maxValue: widget.maxValue!,
+      value: _currentValue!,
+      onChanged: (int value) => setState(() => _currentValue = value),
+    ),
+    actions: <Widget>[
+      GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () => Navigator.of(context).pop(_currentValue),
+        child: widget.numberPickerConfirmWidget ?? const Text('OK'),
+      ),
+    ],
+  );
 }

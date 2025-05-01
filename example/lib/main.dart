@@ -1,8 +1,8 @@
-import "dart:async";
+import 'dart:async';
 
-import "package:easy_pdf_viewer/easy_pdf_viewer.dart";
-import "package:easy_pdf_viewer_example/with_progress.dart";
-import "package:flutter/material.dart";
+import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
+import 'package:easy_pdf_viewer_example/with_progress.dart';
+import 'package:flutter/material.dart';
 
 void main() {
   /// debugInvertOversizedImages
@@ -34,7 +34,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> loadDocument() async {
-    document = await PDFDocument.fromAsset("assets/sample.pdf");
+    document = await PDFDocument.fromAsset('assets/sample.pdf');
 
     setState(() => _isLoading = false);
   }
@@ -42,11 +42,11 @@ class _MyAppState extends State<MyApp> {
   Future<void> changePDF(int value) async {
     setState(() => _isLoading = true);
     if (value == 1) {
-      document = await PDFDocument.fromAsset("assets/sample2.pdf");
+      document = await PDFDocument.fromAsset('assets/sample2.pdf');
     } else if (value == 2) {
-      document = await PDFDocument.fromURL("https://www.africau.edu/images/default/sample.pdf");
+      document = await PDFDocument.fromURL('https://www.africau.edu/images/default/sample.pdf');
     } else {
-      document = await PDFDocument.fromAsset("assets/sample.pdf");
+      document = await PDFDocument.fromAsset('assets/sample.pdf');
     }
     setState(() => _isLoading = false);
   }
@@ -58,25 +58,25 @@ class _MyAppState extends State<MyApp> {
             children: <Widget>[
               const SizedBox(height: 36),
               ListTile(
-                title: const Text("Load from Assets"),
+                title: const Text('Load from Assets'),
                 onTap: () async {
                   await changePDF(1);
                 },
               ),
               ListTile(
-                title: const Text("Load from URL"),
+                title: const Text('Load from URL'),
                 onTap: () async {
                   await changePDF(2);
                 },
               ),
               ListTile(
-                title: const Text("Restore default"),
+                title: const Text('Restore default'),
                 onTap: () async {
                   await changePDF(3);
                 },
               ),
               ListTile(
-                title: const Text("With Progress"),
+                title: const Text('With Progress'),
                 onTap: () async {
                   await Navigator.push(
                     context,
@@ -89,7 +89,7 @@ class _MyAppState extends State<MyApp> {
             ],
           ),
         ),
-        appBar: AppBar(title: const Text("PDFViewer")),
+        appBar: AppBar(title: const Text('PDFViewer')),
         body: Center(
           child: _isLoading
               ? const Center(child: CircularProgressIndicator())
@@ -97,7 +97,7 @@ class _MyAppState extends State<MyApp> {
                   document: document,
                   lazyLoad: false,
                   zoomSteps: 1,
-                  numberPickerConfirmWidget: const Text("Confirm"),
+                  numberPickerConfirmWidget: const Text('Confirm'),
                 ),
         ),
       );

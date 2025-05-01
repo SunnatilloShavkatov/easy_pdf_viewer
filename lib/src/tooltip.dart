@@ -1,11 +1,11 @@
 class PDFViewerTooltip {
   const PDFViewerTooltip({
-    this.first = "First",
-    this.previous = "Previous",
-    this.next = "Next",
-    this.last = "Last",
-    this.pick = "Pick a page",
-    this.jump = "Jump",
+    this.first = 'First',
+    this.previous = 'Previous',
+    this.next = 'Next',
+    this.last = 'Last',
+    this.pick = 'Pick a page',
+    this.jump = 'Jump',
   });
 
   final String first;

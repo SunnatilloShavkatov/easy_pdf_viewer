@@ -1,6 +1,6 @@
-import "dart:io";
-import "package:easy_pdf_viewer/src/zoomable_widget.dart";
-import "package:flutter/widgets.dart";
+import 'dart:io';
+import 'package:easy_pdf_viewer/src/zoomable_widget.dart';
+import 'package:flutter/widgets.dart';
 
 /// A class to represent PDF page
 /// [imgPath], path of the image (pdf page)
@@ -56,22 +56,24 @@ class _PDFPageState extends State<PDFPage> {
       return;
     }
     provider = FileImage(File(widget.imgPath!));
-    provider?.resolve(createLocalImageConfiguration(context)).addListener(
-      ImageStreamListener((ImageInfo imgInfo, bool alreadyPainted) {
-        if (mounted && !alreadyPainted) {
-          setState(() {});
-        }
-      }),
-    );
+    provider
+        ?.resolve(createLocalImageConfiguration(context))
+        .addListener(
+          ImageStreamListener((ImageInfo imgInfo, bool alreadyPainted) {
+            if (mounted && !alreadyPainted) {
+              setState(() {});
+            }
+          }),
+        );
   }
 
   @override
   Widget build(BuildContext context) => ZoomableWidget(
-        onZoomChanged: widget.onZoomChanged,
-        zoomSteps: widget.zoomSteps,
-        panLimit: widget.panLimit,
-        minScale: widget.minScale,
-        maxScale: widget.maxScale,
-        child: provider == null ? const SizedBox.shrink() : Image(image: provider!),
-      );
+    onZoomChanged: widget.onZoomChanged,
+    zoomSteps: widget.zoomSteps,
+    panLimit: widget.panLimit,
+    minScale: widget.minScale,
+    maxScale: widget.maxScale,
+    child: provider == null ? const SizedBox.shrink() : Image(image: provider!),
+  );
 }
