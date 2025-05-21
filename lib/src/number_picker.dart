@@ -149,7 +149,7 @@ class _NumberPickerState extends State<NumberPicker> {
     child: NotificationListener<ScrollEndNotification>(
       onNotification: (ScrollEndNotification not) {
         if (not.dragDetails?.primaryVelocity == 0) {
-          Future<void>.microtask(_maybeCenterValue);
+          unawaited(Future<void>.microtask(_maybeCenterValue));
         }
         return true;
       },
