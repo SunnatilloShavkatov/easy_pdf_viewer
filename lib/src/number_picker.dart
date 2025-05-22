@@ -196,8 +196,9 @@ class _NumberPickerState extends State<NumberPicker> {
   }
 
   String _getDisplayedValue(int value) {
-    final String text =
-        widget.zeroPad ? value.toString().padLeft(widget.maxValue.toString().length, '0') : value.toString();
+    final String text = widget.zeroPad
+        ? value.toString().padLeft(widget.maxValue.toString().length, '0')
+        : value.toString();
     if (widget.textMapper != null) {
       return widget.textMapper!(text);
     } else {

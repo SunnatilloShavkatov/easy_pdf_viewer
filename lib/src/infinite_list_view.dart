@@ -152,42 +152,41 @@ class _InfiniteListViewState extends State<InfiniteListView> {
       axisDirection: axisDirection,
       controller: _effectiveController,
       physics: scrollPhysics,
-      viewportBuilder:
-          (BuildContext context, ViewportOffset offset) => Builder(
-            builder: (BuildContext context) {
-              final ScrollableState state = Scrollable.of(context);
-              final _InfiniteScrollPosition negativeOffset = _InfiniteScrollPosition(
-                physics: scrollPhysics,
-                context: state,
-                initialPixels: -offset.pixels,
-                keepScrollOffset: _effectiveController.keepScrollOffset,
-                negativeScroll: true,
-              );
+      viewportBuilder: (BuildContext context, ViewportOffset offset) => Builder(
+        builder: (BuildContext context) {
+          final ScrollableState state = Scrollable.of(context);
+          final _InfiniteScrollPosition negativeOffset = _InfiniteScrollPosition(
+            physics: scrollPhysics,
+            context: state,
+            initialPixels: -offset.pixels,
+            keepScrollOffset: _effectiveController.keepScrollOffset,
+            negativeScroll: true,
+          );
 
-              offset.addListener(() {
-                negativeOffset._forceNegativePixels(offset.pixels);
-              });
+          offset.addListener(() {
+            negativeOffset._forceNegativePixels(offset.pixels);
+          });
 
-              return Stack(
-                children: <Widget>[
-                  Viewport(
-                    axisDirection: flipAxisDirection(axisDirection),
-                    anchor: 1.0 - widget.anchor,
-                    offset: negativeOffset,
-                    slivers: negativeSlivers,
-                    cacheExtent: widget.cacheExtent,
-                  ),
-                  Viewport(
-                    axisDirection: axisDirection,
-                    anchor: widget.anchor,
-                    offset: offset,
-                    slivers: slivers,
-                    cacheExtent: widget.cacheExtent,
-                  ),
-                ],
-              );
-            },
-          ),
+          return Stack(
+            children: <Widget>[
+              Viewport(
+                axisDirection: flipAxisDirection(axisDirection),
+                anchor: 1.0 - widget.anchor,
+                offset: negativeOffset,
+                slivers: negativeSlivers,
+                cacheExtent: widget.cacheExtent,
+              ),
+              Viewport(
+                axisDirection: axisDirection,
+                anchor: widget.anchor,
+                offset: offset,
+                slivers: slivers,
+                cacheExtent: widget.cacheExtent,
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -199,15 +198,15 @@ class _InfiniteListViewState extends State<InfiniteListView> {
     final EdgeInsets padding = widget.padding ?? EdgeInsets.zero;
     return <Widget>[
       SliverPadding(
-        padding:
-            negative ? padding - EdgeInsets.only(bottom: padding.bottom) : padding - EdgeInsets.only(top: padding.top),
-        sliver:
-            (itemExtent != null)
-                ? SliverFixedExtentList(
-                  delegate: negative ? negativeChildrenDelegate : positiveChildrenDelegate,
-                  itemExtent: itemExtent,
-                )
-                : SliverList(delegate: negative ? negativeChildrenDelegate : positiveChildrenDelegate),
+        padding: negative
+            ? padding - EdgeInsets.only(bottom: padding.bottom)
+            : padding - EdgeInsets.only(top: padding.top),
+        sliver: (itemExtent != null)
+            ? SliverFixedExtentList(
+                delegate: negative ? negativeChildrenDelegate : positiveChildrenDelegate,
+                itemExtent: itemExtent,
+              )
+            : SliverList(delegate: negative ? negativeChildrenDelegate : positiveChildrenDelegate),
       ),
     ];
   }
@@ -233,9 +232,9 @@ class _InfiniteListViewState extends State<InfiniteListView> {
     return SliverChildBuilderDelegate(
       (separatorBuilder != null)
           ? (BuildContext context, int index) {
-            final int itemIndex = index ~/ 2;
-            return index.isEven ? widget.itemBuilder(context, itemIndex) : separatorBuilder(context, itemIndex);
-          }
+              final int itemIndex = index ~/ 2;
+              return index.isEven ? widget.itemBuilder(context, itemIndex) : separatorBuilder(context, itemIndex);
+            }
           : widget.itemBuilder,
       childCount: separatorBuilder == null ? itemCount : (itemCount != null ? math.max(0, itemCount * 2 - 1) : null),
       addAutomaticKeepAlives: widget.addAutomaticKeepAlives,

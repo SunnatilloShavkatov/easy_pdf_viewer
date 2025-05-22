@@ -53,52 +53,50 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        drawer: Drawer(
-          child: Column(
-            children: <Widget>[
-              const SizedBox(height: 36),
-              ListTile(
-                title: const Text('Load from Assets'),
-                onTap: () async {
-                  await changePDF(1);
-                },
-              ),
-              ListTile(
-                title: const Text('Load from URL'),
-                onTap: () async {
-                  await changePDF(2);
-                },
-              ),
-              ListTile(
-                title: const Text('Restore default'),
-                onTap: () async {
-                  await changePDF(3);
-                },
-              ),
-              ListTile(
-                title: const Text('With Progress'),
-                onTap: () async {
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) => const WithProgress(),
-                    ),
-                  );
-                },
-              ),
-            ],
+    drawer: Drawer(
+      child: Column(
+        children: <Widget>[
+          const SizedBox(height: 36),
+          ListTile(
+            title: const Text('Load from Assets'),
+            onTap: () async {
+              await changePDF(1);
+            },
           ),
-        ),
-        appBar: AppBar(title: const Text('PDFViewer')),
-        body: Center(
-          child: _isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : PDFViewer(
-                  document: document,
-                  lazyLoad: false,
-                  zoomSteps: 1,
-                  numberPickerConfirmWidget: const Text('Confirm'),
-                ),
-        ),
-      );
+          ListTile(
+            title: const Text('Load from URL'),
+            onTap: () async {
+              await changePDF(2);
+            },
+          ),
+          ListTile(
+            title: const Text('Restore default'),
+            onTap: () async {
+              await changePDF(3);
+            },
+          ),
+          ListTile(
+            title: const Text('With Progress'),
+            onTap: () async {
+              await Navigator.push(
+                context,
+                MaterialPageRoute<void>(builder: (BuildContext context) => const WithProgress()),
+              );
+            },
+          ),
+        ],
+      ),
+    ),
+    appBar: AppBar(title: const Text('PDFViewer')),
+    body: Center(
+      child: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : PDFViewer(
+              document: document,
+              lazyLoad: false,
+              zoomSteps: 1,
+              numberPickerConfirmWidget: const Text('Confirm'),
+            ),
+    ),
+  );
 }

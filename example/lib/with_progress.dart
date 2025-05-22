@@ -81,62 +81,47 @@ class _WithProgressState extends State<WithProgress> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        drawer: Drawer(
-          child: Column(
-            children: <Widget>[
-              const SizedBox(height: 36),
-              ListTile(
-                title: const Text('Load from Assets'),
-                onTap: () {
-                  changePDF(1);
-                },
-              ),
-              ListTile(
-                title: const Text('Load from URL'),
-                onTap: () {
-                  changePDF(2);
-                },
-              ),
-              ListTile(
-                title: const Text('Restore default'),
-                onTap: () {
-                  changePDF(3);
-                },
-              ),
-              ListTile(
-                title: const Text('With Progress'),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) => const WithProgress(),
-                    ),
-                  );
-                },
-              ),
-            ],
+    drawer: Drawer(
+      child: Column(
+        children: <Widget>[
+          const SizedBox(height: 36),
+          ListTile(
+            title: const Text('Load from Assets'),
+            onTap: () {
+              changePDF(1);
+            },
           ),
-        ),
-        appBar: AppBar(
-          title: const Text('PDFViewer'),
-        ),
-        body: SafeArea(
-          child: _isLoading
-              ? Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      const CircularProgressIndicator(),
-                      buildProgress(),
-                    ],
-                  ),
-                )
-              : PDFViewer(
-                  document: document,
-                  numberPickerConfirmWidget: const Text(
-                    'Confirm',
-                  ),
-                ),
-        ),
-      );
+          ListTile(
+            title: const Text('Load from URL'),
+            onTap: () {
+              changePDF(2);
+            },
+          ),
+          ListTile(
+            title: const Text('Restore default'),
+            onTap: () {
+              changePDF(3);
+            },
+          ),
+          ListTile(
+            title: const Text('With Progress'),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute<void>(builder: (BuildContext context) => const WithProgress()));
+            },
+          ),
+        ],
+      ),
+    ),
+    appBar: AppBar(title: const Text('PDFViewer')),
+    body: SafeArea(
+      child: _isLoading
+          ? Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[const CircularProgressIndicator(), buildProgress()],
+              ),
+            )
+          : PDFViewer(document: document, numberPickerConfirmWidget: const Text('Confirm')),
+    ),
+  );
 }

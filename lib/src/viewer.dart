@@ -230,13 +230,12 @@ class _PDFViewerState extends State<PDFViewer> {
   void _pickPage() {
     showDialog<int>(
       context: context,
-      builder:
-          (context) => PagePicker(
-            title: widget.tooltip.pick,
-            maxValue: widget.document.count,
-            initialValue: _pageNumber,
-            numberPickerConfirmWidget: widget.numberPickerConfirmWidget,
-          ),
+      builder: (context) => PagePicker(
+        title: widget.tooltip.pick,
+        maxValue: widget.document.count,
+        initialValue: _pageNumber,
+        numberPickerConfirmWidget: widget.numberPickerConfirmWidget,
+      ),
     ).then((int? value) {
       if (value != null) {
         _pageNumber = value;
@@ -252,10 +251,9 @@ class _PDFViewerState extends State<PDFViewer> {
     body: Stack(
       children: <Widget>[
         PageView.builder(
-          physics:
-              _swipeEnabled && widget.enableSwipeNavigation && !_isLoading
-                  ? null
-                  : const NeverScrollableScrollPhysics(),
+          physics: _swipeEnabled && widget.enableSwipeNavigation && !_isLoading
+              ? null
+              : const NeverScrollableScrollPhysics(),
           onPageChanged: (int page) {
             setState(() {
               _pageNumber = page + 1;
@@ -266,31 +264,27 @@ class _PDFViewerState extends State<PDFViewer> {
           scrollDirection: widget.scrollDirection ?? Axis.horizontal,
           controller: _pageController,
           itemCount: _pages?.length ?? 0,
-          itemBuilder:
-              (_, int index) =>
-                  _pages![index] == null
-                      ? Center(child: widget.progressIndicator ?? const CircularProgressIndicator())
-                      : _pages![index]!,
+          itemBuilder: (_, int index) => _pages![index] == null
+              ? Center(child: widget.progressIndicator ?? const CircularProgressIndicator())
+              : _pages![index]!,
         ),
         if (widget.showIndicator && !_isLoading) _drawIndicator() else const SizedBox.shrink(),
       ],
     ),
-    floatingActionButton:
-        widget.showPicker && widget.document.count > 1
-            ? FloatingActionButton(
-              elevation: 4,
-              tooltip: widget.tooltip.jump,
-              backgroundColor: widget.pickerButtonColor ?? Colors.blue,
-              onPressed: _pickPage,
-              child: Icon(Icons.view_carousel, color: widget.pickerIconColor ?? Colors.white),
-            )
-            : null,
+    floatingActionButton: widget.showPicker && widget.document.count > 1
+        ? FloatingActionButton(
+            elevation: 4,
+            tooltip: widget.tooltip.jump,
+            backgroundColor: widget.pickerButtonColor ?? Colors.blue,
+            onPressed: _pickPage,
+            child: Icon(Icons.view_carousel, color: widget.pickerIconColor ?? Colors.white),
+          )
+        : null,
     floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-    bottomNavigationBar:
-        (widget.showNavigation && widget.document.count > 1)
-            ? widget.navigationBuilder != null
-                ? widget.navigationBuilder!(context, _pageNumber, widget.document.count, _jumpToPage, _animateToPage)
-                : BottomAppBar(
+    bottomNavigationBar: (widget.showNavigation && widget.document.count > 1)
+        ? widget.navigationBuilder != null
+              ? widget.navigationBuilder!(context, _pageNumber, widget.document.count, _jumpToPage, _animateToPage)
+              : BottomAppBar(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -298,29 +292,27 @@ class _PDFViewerState extends State<PDFViewer> {
                         child: IconButton(
                           icon: const Icon(Icons.first_page),
                           tooltip: widget.tooltip.first,
-                          onPressed:
-                              _pageNumber == 1 || _isLoading
-                                  ? null
-                                  : () {
-                                    _pageNumber = 1;
-                                    _jumpToPage();
-                                  },
+                          onPressed: _pageNumber == 1 || _isLoading
+                              ? null
+                              : () {
+                                  _pageNumber = 1;
+                                  _jumpToPage();
+                                },
                         ),
                       ),
                       Expanded(
                         child: IconButton(
                           icon: const Icon(Icons.chevron_left),
                           tooltip: widget.tooltip.previous,
-                          onPressed:
-                              _pageNumber == 1 || _isLoading
-                                  ? null
-                                  : () {
-                                    _pageNumber--;
-                                    if (1 > _pageNumber) {
-                                      _pageNumber = 1;
-                                    }
-                                    _animateToPage();
-                                  },
+                          onPressed: _pageNumber == 1 || _isLoading
+                              ? null
+                              : () {
+                                  _pageNumber--;
+                                  if (1 > _pageNumber) {
+                                    _pageNumber = 1;
+                                  }
+                                  _animateToPage();
+                                },
                         ),
                       ),
                       if (widget.showPicker) const Expanded(child: Text('')) else const SizedBox(width: 1),
@@ -328,34 +320,32 @@ class _PDFViewerState extends State<PDFViewer> {
                         child: IconButton(
                           icon: const Icon(Icons.chevron_right),
                           tooltip: widget.tooltip.next,
-                          onPressed:
-                              _pageNumber == widget.document.count || _isLoading
-                                  ? null
-                                  : () {
-                                    _pageNumber++;
-                                    if (widget.document.count < _pageNumber) {
-                                      _pageNumber = widget.document.count;
-                                    }
-                                    _animateToPage();
-                                  },
+                          onPressed: _pageNumber == widget.document.count || _isLoading
+                              ? null
+                              : () {
+                                  _pageNumber++;
+                                  if (widget.document.count < _pageNumber) {
+                                    _pageNumber = widget.document.count;
+                                  }
+                                  _animateToPage();
+                                },
                         ),
                       ),
                       Expanded(
                         child: IconButton(
                           icon: const Icon(Icons.last_page),
                           tooltip: widget.tooltip.last,
-                          onPressed:
-                              _pageNumber == widget.document.count || _isLoading
-                                  ? null
-                                  : () {
-                                    _pageNumber = widget.document.count;
-                                    _jumpToPage();
-                                  },
+                          onPressed: _pageNumber == widget.document.count || _isLoading
+                              ? null
+                              : () {
+                                  _pageNumber = widget.document.count;
+                                  _jumpToPage();
+                                },
                         ),
                       ),
                     ],
                   ),
                 )
-            : const SizedBox.shrink(),
+        : const SizedBox.shrink(),
   );
 }

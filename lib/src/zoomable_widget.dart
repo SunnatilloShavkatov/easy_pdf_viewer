@@ -265,7 +265,9 @@ class _ZoomableWidgetState extends State<ZoomableWidget> {
             child: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
                 _containerSize = Size(constraints.maxWidth, constraints.maxHeight);
-                return Center(child: Container(key: _key, child: widget.child));
+                return Center(
+                  child: Container(key: _key, child: widget.child),
+                );
               },
             ),
           ),
@@ -341,10 +343,9 @@ class _ZoomableChildState extends AnimatedWidgetBaseState<_ZoomableChild> {
   Widget build(BuildContext context) => Transform(
     alignment: Alignment.center,
     origin: Offset(-(_panOffset!.evaluate(animation)?.dx ?? 0), -(_panOffset!.evaluate(animation)?.dy ?? 0)),
-    transform:
-        Matrix4.identity()
-          ..translate(_panOffset?.evaluate(animation)?.dx, _panOffset?.evaluate(animation)?.dy ?? 0)
-          ..scale(_zoom!.evaluate(animation), _zoom!.evaluate(animation)),
+    transform: Matrix4.identity()
+      ..translate(_panOffset?.evaluate(animation)?.dx, _panOffset?.evaluate(animation)?.dy ?? 0)
+      ..scale(_zoom!.evaluate(animation), _zoom!.evaluate(animation)),
     child: Transform.rotate(angle: _rotation!.evaluate(animation) ?? 0, child: widget.child),
   );
 }
