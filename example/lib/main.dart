@@ -4,6 +4,8 @@ import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
 import 'package:easy_pdf_viewer_example/with_progress.dart';
 import 'package:flutter/material.dart';
 
+const String _samplePdfUrl = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
+
 void main() {
   /// debugInvertOversizedImages
   runApp(const App());
@@ -25,6 +27,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool _isLoading = true;
+  String? _errorMessage;
   late PDFDocument document;
 
   @override
@@ -34,21 +37,40 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> loadDocument() async {
-    document = await PDFDocument.fromAsset('assets/sample.pdf');
-
-    setState(() => _isLoading = false);
+    try {
+      document = await PDFDocument.fromAsset('assets/sample.pdf');
+      setState(() {
+        _errorMessage = null;
+        _isLoading = false;
+      });
+    } on Exception catch (error) {
+      setState(() {
+        _errorMessage = error.toString();
+        _isLoading = false;
+      });
+    }
   }
 
   Future<void> changePDF(int value) async {
     setState(() => _isLoading = true);
-    if (value == 1) {
-      document = await PDFDocument.fromAsset('assets/sample2.pdf');
-    } else if (value == 2) {
-      document = await PDFDocument.fromURL('https://www.africau.edu/images/default/sample.pdf');
-    } else {
-      document = await PDFDocument.fromAsset('assets/sample.pdf');
+    try {
+      if (value == 1) {
+        document = await PDFDocument.fromAsset('assets/sample2.pdf');
+      } else if (value == 2) {
+        document = await PDFDocument.fromURL(_samplePdfUrl);
+      } else {
+        document = await PDFDocument.fromAsset('assets/sample.pdf');
+      }
+      setState(() {
+        _errorMessage = null;
+        _isLoading = false;
+      });
+    } on Exception catch (error) {
+      setState(() {
+        _errorMessage = error.toString();
+        _isLoading = false;
+      });
     }
-    setState(() => _isLoading = false);
   }
 
   @override
@@ -91,6 +113,11 @@ class _MyAppState extends State<MyApp> {
     body: Center(
       child: _isLoading
           ? const Center(child: CircularProgressIndicator())
+          : _errorMessage != null
+          ? Padding(
+              padding: const EdgeInsets.all(24),
+              child: Text(_errorMessage!, textAlign: TextAlign.center),
+            )
           : PDFViewer(
               document: document,
               lazyLoad: false,

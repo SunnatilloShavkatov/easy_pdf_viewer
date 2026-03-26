@@ -1,4 +1,5 @@
-// ignore_for_file: always_specify_types, comment_references
+// The API docs in this file use square-bracket references extensively.
+// ignore_for_file: comment_references
 
 import 'dart:math';
 
@@ -344,8 +345,8 @@ class _ZoomableChildState extends AnimatedWidgetBaseState<_ZoomableChild> {
     alignment: Alignment.center,
     origin: Offset(-(_panOffset!.evaluate(animation)?.dx ?? 0), -(_panOffset!.evaluate(animation)?.dy ?? 0)),
     transform: Matrix4.identity()
-      ..translate(_panOffset?.evaluate(animation)?.dx, _panOffset?.evaluate(animation)?.dy ?? 0)
-      ..scale(_zoom!.evaluate(animation), _zoom!.evaluate(animation)),
+      ..translateByDouble(_panOffset?.evaluate(animation)?.dx ?? 0, _panOffset?.evaluate(animation)?.dy ?? 0, 0, 1)
+      ..scaleByDouble(_zoom!.evaluate(animation) ?? 1, _zoom!.evaluate(animation) ?? 1, 1, 1),
     child: Transform.rotate(angle: _rotation!.evaluate(animation) ?? 0, child: widget.child),
   );
 }

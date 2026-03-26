@@ -1,3 +1,5 @@
+// Futures are intentionally not awaited in some UI callbacks, and the docs in
+// this file use square-bracket references extensively.
 // ignore_for_file: discarded_futures, comment_references
 
 import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';

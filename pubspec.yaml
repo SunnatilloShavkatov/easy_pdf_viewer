@@ -1,5 +1,5 @@
 name: easy_pdf_viewer
-version: 1.1.1
+version: 1.2.0
 homepage: https://github.com/SunnatilloShavkatov/easy_pdf_viewer.git
 description: "A flutter plugin for handling PDF files. Works on both Android & iOS"
 
@@ -10,13 +10,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_cache_manager: ^3.4.1
   path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  analysis_lints: ^1.0.2
+  analysis_lints: ^1.0.9
 
 flutter:
   plugin:

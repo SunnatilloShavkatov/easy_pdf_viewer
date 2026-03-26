@@ -9,7 +9,7 @@ void main() {
   setUp(() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
       channel,
-      (MethodCall methodCall) async => '42',
+      (MethodCall methodCall) => Future<String>.value('42'),
     );
   });
 
@@ -17,7 +17,7 @@ void main() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(channel, null);
   });
 
-  test('getPlatformVersion', () async {
+  test('getPlatformVersion', () {
     // expect(await EasyPdfViewer.platformVersion, '42');
   });
 }

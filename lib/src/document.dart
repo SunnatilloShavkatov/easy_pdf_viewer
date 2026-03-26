@@ -1,11 +1,9 @@
-// ignore_for_file: discarded_futures
-
 import 'dart:async';
 import 'dart:io';
 
+import 'package:easy_pdf_viewer/src/cache_manager.dart';
 import 'package:easy_pdf_viewer/src/page.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:path_provider/path_provider.dart';
 
 class PDFDocument {
@@ -90,6 +88,7 @@ class PDFDocument {
   /// [downloadProgress] is not called after [onDownloadComplete].
   /// Once the download is finished, [onDownloadComplete] is called. If the file
   /// is already available, [onDownloadComplete] is called directly.
+  /// If the download fails, [onDownloadError] is called when provided.
   static void fromURLWithDownloadProgress(
     String url, {
     Map<String, String>? headers,
@@ -97,6 +96,7 @@ class PDFDocument {
     bool clearPreviewCache = true,
     required void Function(DownloadProgress downloadProgress) downloadProgress,
     required void Function(PDFDocument document) onDownloadComplete,
+    void Function(Object error)? onDownloadError,
   }) {
     StreamSubscription<FileResponse>? streamSubscription;
     final Stream<FileResponse> fileResponse = (cacheManager ?? DefaultCacheManager()).getFileStream(
@@ -105,19 +105,25 @@ class PDFDocument {
       withProgress: true,
     );
 
-    streamSubscription = fileResponse.listen((FileResponse event) async {
-      if (event is DownloadProgress) {
-        downloadProgress.call(event);
-        return;
-      }
+    streamSubscription = fileResponse.listen(
+      (FileResponse event) async {
+        if (event is DownloadProgress) {
+          downloadProgress.call(event);
+          return;
+        }
 
-      if (event is FileInfo) {
-        final PDFDocument pdfDocument = await fromFile(event.file, clearPreviewCache: clearPreviewCache);
-        onDownloadComplete.call(pdfDocument);
+        if (event is FileInfo) {
+          final PDFDocument pdfDocument = await fromFile(event.file, clearPreviewCache: clearPreviewCache);
+          onDownloadComplete.call(pdfDocument);
+          unawaited(streamSubscription?.cancel());
+          return;
+        }
+      },
+      onError: (Object error, StackTrace stackTrace) {
+        onDownloadError?.call(error);
         unawaited(streamSubscription?.cancel());
-        return;
-      }
-    });
+      },
+    );
   }
 
   /// Load a PDF File from assets folder

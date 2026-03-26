@@ -1,3 +1,7 @@
+## 1.2.0
+
+- Remove `flutter_cache_manager` dependency and keep built-in caching support.
+
 ## 1.0.8
 
 - Add param onZoomChanged to PDFViewer

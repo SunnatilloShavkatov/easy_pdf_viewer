@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'easy_pdf_viewer'
-  s.version          = '1.0.7'
+  s.version          = '1.2.0'
   s.summary          = 'Allows you to generate PNG&#x27;s of specified pages from a provided PDF file source.'
   s.description      = <<-DESC
   Allows you to generate PNG&#x27;s of specified pages from a provided PDF file source.
@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.platform = :ios, '11.0'
+  s.platform = :ios, '13.0'
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }

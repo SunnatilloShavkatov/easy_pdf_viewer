@@ -1,3 +1,4 @@
+// Parameter mutation is used to keep the original picker algorithm compact.
 // ignore_for_file: parameter_assignments
 import 'dart:async';
 
