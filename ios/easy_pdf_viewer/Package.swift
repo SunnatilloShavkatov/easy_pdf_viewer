@@ -18,7 +18,11 @@ let package = Package(
             dependencies: [
                 .product(name: "FlutterFramework", package: "FlutterFramework"),
             ],
-            path: "Sources/easy_pdf_viewer"
+            path: "Sources/easy_pdf_viewer",
+            exclude: [
+                "EasyPdfViewerPlugin.m",
+                "include",
+            ]
         )
     ]
 )

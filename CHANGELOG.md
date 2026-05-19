@@ -1,3 +1,7 @@
+## 1.3.1
+
+- Restore CocoaPods support alongside Swift Package Manager for backward compatibility.
+
 ## 1.3.0
 
 - Migrate iOS to Swift Package Manager (SPM).
