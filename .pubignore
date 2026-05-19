@@ -13,3 +13,4 @@ build/
 /android/.settings/
 /android/.classpath
 /android/.project
+/ios/easy_pdf_viewer/.swiftpm/xcode/

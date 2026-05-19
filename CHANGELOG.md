@@ -1,3 +1,9 @@
+## 1.3.0
+
+- Migrate iOS to Swift Package Manager (SPM).
+- Rewrite iOS native implementation in Swift; remove CocoaPods and ObjC bridge.
+- Drop `flutter_cache_manager` dependency (built-in cache retained).
+
 ## 1.2.0
 
 - Remove `flutter_cache_manager` dependency and keep built-in caching support.

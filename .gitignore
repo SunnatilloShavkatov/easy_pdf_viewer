@@ -15,3 +15,4 @@ build/
 /android/.gradle/
 /.flutter-plugins
 /.flutter-plugins-dependencies
+/ios/easy_pdf_viewer/.swiftpm/xcode/
