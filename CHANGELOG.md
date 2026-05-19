@@ -1,3 +1,8 @@
+## 1.3.2
+
+- Migrate Android build files from Groovy DSL to Kotlin DSL (`.gradle` → `.gradle.kts`).
+- Update Gradle wrapper and Android Gradle Plugin versions.
+
 ## 1.3.1
 
 - Restore CocoaPods support alongside Swift Package Manager for backward compatibility.
