@@ -1,3 +1,9 @@
+## 1.3.3
+
+- Fix CocoaPods build by resolving non-existent `RunnerTests` target lookup failure in the iOS example project.
+- Fix CocoaPods integration base configuration warning by configuring the `Profile` build configuration to use `Profile.xcconfig`.
+- Set minimum Flutter SDK constraint to `flutter: ">=3.41.0"`.
+
 ## 1.3.2
 
 - Migrate Android build files from Groovy DSL to Kotlin DSL (`.gradle` → `.gradle.kts`).

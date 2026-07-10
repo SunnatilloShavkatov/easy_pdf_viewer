@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "dev.kaichi.easy_pdf_viewer"
-version = "1.3.2"
+version = "1.3.3"
 
 android {
     namespace = "dev.kaichi.easy_pdf_viewer"
