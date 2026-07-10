@@ -2,11 +2,11 @@ plugins {
     id("com.android.library")
 }
 
-group = "dev.kaichi.easy_pdf_viewer"
+group = "uz.plugin.easy_pdf_viewer"
 version = "1.3.3"
 
 android {
-    namespace = "dev.kaichi.easy_pdf_viewer"
+    namespace = "uz.plugin.easy_pdf_viewer"
     compileSdk = 36
 
     compileOptions {

@@ -21,7 +21,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: dev.kaichi.easy_pdf_viewer
+        package: uz.plugin.easy_pdf_viewer
         pluginClass: EasyPdfViewerPlugin
       ios:
         pluginClass: SwiftEasyPdfViewerPlugin

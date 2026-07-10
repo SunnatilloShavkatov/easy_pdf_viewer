@@ -1,4 +1,4 @@
-package dev.kaichi.easy_pdf_viewer
+package uz.plugin.easy_pdf_viewer
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
