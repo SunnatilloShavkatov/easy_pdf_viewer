@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 const String _samplePdfUrl = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
 
 class WithProgress extends StatefulWidget {
-  const WithProgress({super.key});
+  const new({super.key});
 
   @override
   State<WithProgress> createState() => _WithProgressState();
@@ -125,12 +125,7 @@ class _WithProgressState extends State<WithProgress> {
           ListTile(
             title: const Text('With Progress'),
             onTap: () {
-              unawaited(
-                Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(builder: (BuildContext context) => const WithProgress()),
-                ),
-              );
+              Navigator.push(context, MaterialPageRoute<void>(builder: (BuildContext context) => const WithProgress()));
             },
           ),
         ],

@@ -1,1 +1,1 @@
-rootProject.name = 'easy_pdf_viewer'
+rootProject.name = "easy_pdf_viewer"

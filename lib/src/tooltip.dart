@@ -1,5 +1,5 @@
 class PDFViewerTooltip {
-  const PDFViewerTooltip({
+  const new({
     this.first = 'First',
     this.previous = 'Previous',
     this.next = 'Next',

@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:easy_pdf_viewer/src/zoomable_widget.dart';
 import 'package:flutter/widgets.dart';
 
@@ -11,7 +12,7 @@ import 'package:flutter/widgets.dart';
 /// [maxScale] maximum zoom scale
 /// [panLimit] limit for pan
 class PDFPage extends StatefulWidget {
-  const PDFPage(
+  const new(
     this.imgPath,
     this.num, {
     super.key,

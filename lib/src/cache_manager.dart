@@ -11,11 +11,11 @@ import 'package:path_provider/path_provider.dart';
 enum FileSource { cache, online }
 
 abstract class FileResponse {
-  const FileResponse();
+  const new();
 }
 
 class DownloadProgress extends FileResponse {
-  const DownloadProgress(this.url, this.downloaded, this.totalSize);
+  const new(this.url, this.downloaded, this.totalSize);
 
   final String url;
   final int downloaded;
@@ -31,7 +31,7 @@ class DownloadProgress extends FileResponse {
 }
 
 class FileInfo extends FileResponse {
-  const FileInfo(this.file, this.source, this.validTill, this.originalUrl);
+  const new(this.file, this.source, this.validTill, this.originalUrl);
 
   final File file;
   final FileSource source;
@@ -55,9 +55,9 @@ abstract class CacheManager {
 }
 
 class DefaultCacheManager implements CacheManager {
-  factory DefaultCacheManager() => _instance;
+  factory() => _instance;
 
-  DefaultCacheManager._();
+  new _();
 
   static final DefaultCacheManager _instance = DefaultCacheManager._();
 
@@ -228,7 +228,7 @@ class DefaultCacheManager implements CacheManager {
 }
 
 class _CacheEntry {
-  const _CacheEntry(this.file);
+  const new(this.file);
 
   final File file;
 }

@@ -4,7 +4,7 @@
 
 import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
 import 'package:easy_pdf_viewer/src/page_picker.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// enum to describe indicator position
 enum IndicatorPosition { topLeft, topRight, bottomLeft, bottomRight }
@@ -32,7 +32,7 @@ enum IndicatorPosition { topLeft, topRight, bottomLeft, bottomRight }
 /// [onPageChanged] function called when page changes
 ///
 class PDFViewer extends StatefulWidget {
-  const PDFViewer({
+  const new({
     super.key,
     required this.document,
     this.scrollDirection,

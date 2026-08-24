@@ -3,13 +3,13 @@
 import 'dart:async';
 
 import 'package:easy_pdf_viewer/src/infinite_list_view.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:material_ui/material_ui.dart';
 
 typedef TextMapper = String Function(String numberText);
 
 class NumberPicker extends StatefulWidget {
-  const NumberPicker({
+  const new({
     super.key,
     required this.minValue,
     required this.maxValue,
@@ -222,19 +222,17 @@ class _NumberPickerState extends State<NumberPicker> {
         final int cycles = (offset / (itemCount * itemExtent)).floor();
         index += cycles * itemCount;
       }
-      unawaited(
-        _scrollController.animateTo(
-          index * itemExtent,
-          curve: Curves.easeOutCubic,
-          duration: const Duration(milliseconds: 300),
-        ),
+      _scrollController.animateTo(
+        index * itemExtent,
+        curve: Curves.easeOutCubic,
+        duration: const Duration(milliseconds: 300),
       );
     }
   }
 }
 
 class _NumberPickerSelectedItemDecoration extends StatelessWidget {
-  const _NumberPickerSelectedItemDecoration({required this.axis, required this.itemExtent, required this.decoration});
+  const new({required this.axis, required this.itemExtent, required this.decoration});
 
   final Axis axis;
   final double itemExtent;

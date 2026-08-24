@@ -6,7 +6,7 @@ import 'dart:math';
 import 'package:flutter/widgets.dart';
 
 class ZoomableWidget extends StatefulWidget {
-  const ZoomableWidget({
+  const new({
     super.key,
     this.minScale = 0.7,
     this.maxScale = 1.4,
@@ -290,7 +290,7 @@ class _ZoomableWidgetState extends State<ZoomableWidget> {
 }
 
 class _ZoomableWidgetLayout extends MultiChildLayoutDelegate {
-  _ZoomableWidgetLayout();
+  new();
 
   static const String gestureContainer = 'gesturecontainer';
   static const String painter = 'painter';
@@ -308,7 +308,7 @@ class _ZoomableWidgetLayout extends MultiChildLayoutDelegate {
 }
 
 class _ZoomableChild extends ImplicitlyAnimatedWidget {
-  const _ZoomableChild({
+  const new({
     required super.duration,
     super.curve,
     required this.zoom,
@@ -352,14 +352,14 @@ class _ZoomableChildState extends AnimatedWidgetBaseState<_ZoomableChild> {
 }
 
 class DoubleTween extends Tween<double?> {
-  DoubleTween({super.begin, super.end});
+  new({super.begin, super.end});
 
   @override
   double lerp(double t) => begin! + (end! - begin!) * t;
 }
 
 class OffsetTween extends Tween<Offset?> {
-  OffsetTween({super.begin, super.end});
+  new({super.begin, super.end});
 
   @override
   Offset lerp(double t) => begin! + (end! - begin!) * t;

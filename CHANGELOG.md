@@ -1,3 +1,14 @@
+## 1.4.0
+
+- Rename Android package to `uz.plugin.easy_pdf_viewer` and implement `EasyPdfViewerPlugin` for the Android embedder.
+- Migrate widgets from `flutter/material.dart` to the `material_ui` package (`material_ui: ^1.0.1`).
+- Raise minimum SDK constraints: `flutter: ">=3.47.0"`, `sdk: ">=3.13.0 <4.0.0"`.
+- Fix deprecated `ScrollView.cacheExtent` usage; use `scrollCacheExtent` (`ScrollCacheExtent.pixels`) instead.
+- Bump Android Gradle Plugin to `9.0.1`, Kotlin to `2.3.20`, Gradle wrapper to `9.1.0`, `compileSdk` to `37`.
+- Fix invalid Groovy-style single quotes in `android/settings.gradle.kts`.
+- Fix `.kotlin/` ignore pattern in `example/android/.gitignore`.
+- Update `analysis_lints` to `^1.1.0` and scope analyzer excludes to platform build folders.
+
 ## 1.3.3
 
 - Fix CocoaPods build by resolving non-existent `RunnerTests` target lookup failure in the iOS example project.

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
 import 'package:easy_pdf_viewer_example/with_progress.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 const String _samplePdfUrl = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
 
@@ -12,14 +12,14 @@ void main() {
 }
 
 class App extends StatelessWidget {
-  const App({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) => const MaterialApp(home: MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  const new({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();

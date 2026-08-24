@@ -1,8 +1,8 @@
 import 'package:easy_pdf_viewer/src/number_picker.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class PagePicker extends StatefulWidget {
-  const PagePicker({
+  const new({
     super.key,
     required this.title,
     required this.maxValue,

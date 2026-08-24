@@ -6,7 +6,7 @@ plugins {
 android {
     namespace = "com.aboutkai.easy_pdf_viewer_example"
     ndkVersion = "28.2.13676358"
-    compileSdk = 36
+    compileSdk = 37
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17

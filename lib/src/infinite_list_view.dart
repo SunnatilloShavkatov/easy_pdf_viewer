@@ -1,9 +1,9 @@
 import 'dart:math' as math;
 
 import 'package:flutter/gestures.dart' show DragStartBehavior;
-import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Infinite ListView
 ///
@@ -11,7 +11,7 @@ import 'package:flutter/widgets.dart';
 ///
 class InfiniteListView extends StatefulWidget {
   /// See [ListView.builder]
-  const InfiniteListView.builder({
+  const new builder({
     super.key,
     this.scrollDirection = Axis.vertical,
     this.reverse = false,
@@ -33,7 +33,7 @@ class InfiniteListView extends StatefulWidget {
   }) : separatorBuilder = null;
 
   /// See [ListView.separated]
-  const InfiniteListView.separated({
+  const new separated({
     super.key,
     this.scrollDirection = Axis.vertical,
     this.reverse = false,
@@ -81,7 +81,7 @@ class InfiniteListView extends StatefulWidget {
   /// See: [ListView.itemExtent]
   final double? itemExtent;
 
-  /// See: [ScrollView.cacheExtent]
+  /// See: [ScrollView.scrollCacheExtent]
   final double? cacheExtent;
 
   /// See: [ScrollView.anchor]
@@ -170,18 +170,18 @@ class _InfiniteListViewState extends State<InfiniteListView> {
           return Stack(
             children: <Widget>[
               Viewport(
-                axisDirection: flipAxisDirection(axisDirection),
-                anchor: 1.0 - widget.anchor,
                 offset: negativeOffset,
                 slivers: negativeSlivers,
-                cacheExtent: widget.cacheExtent,
+                anchor: 1.0 - widget.anchor,
+                axisDirection: flipAxisDirection(axisDirection),
+                scrollCacheExtent: widget.cacheExtent == null ? null : ScrollCacheExtent.pixels(widget.cacheExtent!),
               ),
               Viewport(
-                axisDirection: axisDirection,
-                anchor: widget.anchor,
                 offset: offset,
                 slivers: slivers,
-                cacheExtent: widget.cacheExtent,
+                anchor: widget.anchor,
+                axisDirection: axisDirection,
+                scrollCacheExtent: widget.cacheExtent == null ? null : ScrollCacheExtent.pixels(widget.cacheExtent!),
               ),
             ],
           );
@@ -258,7 +258,7 @@ class _InfiniteListViewState extends State<InfiniteListView> {
 
 class InfiniteScrollController extends ScrollController {
   /// Creates a new [InfiniteScrollController]
-  InfiniteScrollController({super.initialScrollOffset, super.keepScrollOffset, super.debugLabel});
+  new({super.initialScrollOffset, super.keepScrollOffset, super.debugLabel});
 
   @override
   ScrollPosition createScrollPosition(ScrollPhysics physics, ScrollContext context, ScrollPosition? oldPosition) =>
@@ -273,7 +273,7 @@ class InfiniteScrollController extends ScrollController {
 }
 
 class _InfiniteScrollPosition extends ScrollPositionWithSingleContext {
-  _InfiniteScrollPosition({
+  new({
     required super.physics,
     required super.context,
     super.initialPixels,

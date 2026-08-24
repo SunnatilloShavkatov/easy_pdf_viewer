@@ -3,11 +3,11 @@ plugins {
 }
 
 group = "uz.plugin.easy_pdf_viewer"
-version = "1.3.3"
+version = "1.4.0"
 
 android {
     namespace = "uz.plugin.easy_pdf_viewer"
-    compileSdk = 36
+    compileSdk = 37
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17

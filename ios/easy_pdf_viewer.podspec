@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'easy_pdf_viewer'
-  s.version          = '1.3.3'
+  s.version          = '1.4.0'
   s.summary          = 'A flutter plugin for handling PDF files.'
   s.description      = <<-DESC
   Allows you to generate PNGs of specified pages from a provided PDF file source.
