@@ -1,3 +1,12 @@
+## 1.5.0
+
+- Add macOS platform support.
+- Migrate iOS and macOS native code to unified shared Darwin folder (`darwin/`) with `sharedDarwinSource: true`.
+- Support Swift Package Manager (SPM) on iOS and macOS via `Package.swift`.
+- Migrate PDF rendering to cross-platform CoreGraphics (`CGPDFDocument`, `CGPDFPage`, `CGContext`) and ImageIO (`CGImageDestination`).
+- Ensure full compatibility with `material_ui: ^1.1.0`.
+- Add Privacy Manifest (`PrivacyInfo.xcprivacy`) for Apple platforms.
+
 ## 1.4.0
 
 - Rename Android package to `uz.plugin.easy_pdf_viewer` and implement `EasyPdfViewerPlugin` for the Android embedder.

@@ -1,17 +1,31 @@
+#if os(iOS)
 import Flutter
 import UIKit
+#elseif os(macOS)
+import AppKit
+import FlutterMacOS
+#endif
+import CoreGraphics
+import Foundation
+import ImageIO
+import UniformTypeIdentifiers
 
-@objc public class SwiftEasyPdfViewerPlugin: NSObject, FlutterPlugin {
+public class EasyPdfViewerPlugin: NSObject, FlutterPlugin {
 
     private static let directory = "EasyPdfViewer"
     private static var fileName = ""
 
     public static func register(with registrar: FlutterPluginRegistrar) {
+#if os(iOS)
+        let messenger = registrar.messenger()
+#elseif os(macOS)
+        let messenger = registrar.messenger
+#endif
         let channel = FlutterMethodChannel(
             name: "easy_pdf_viewer_plugin",
-            binaryMessenger: registrar.messenger()
+            binaryMessenger: messenger
         )
-        let instance = SwiftEasyPdfViewerPlugin()
+        let instance = EasyPdfViewerPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
 
@@ -46,9 +60,9 @@ import UIKit
     }
 
     private func clearCacheDir() {
-        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
-        guard let docs = paths.first else { return }
-        let dir = (docs as NSString).appendingPathComponent(Self.directory)
+        let paths = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)
+        guard let cacheDir = paths.first else { return }
+        let dir = (cacheDir as NSString).appendingPathComponent(Self.directory)
         guard FileManager.default.fileExists(atPath: dir) else { return }
         NSLog("[EasyPdfViewerPlugin] Removing old documents cache")
         do {
@@ -106,25 +120,42 @@ import UIKit
 
         let sourceRect = page.getBoxRect(.mediaBox)
         let dpi: CGFloat = 300.0 / 72.0
-        let width = sourceRect.size.width * dpi
-        let height = sourceRect.size.height * dpi
+        let width = Int(sourceRect.size.width * dpi)
+        let height = Int(sourceRect.size.height * dpi)
+        guard width > 0, height > 0 else { return nil }
 
-        UIGraphicsBeginImageContext(CGSize(width: width, height: height))
-        defer { UIGraphicsEndImageContext() }
-        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let bitmapInfo = CGImageAlphaInfo.premultipliedLast.rawValue
+        guard let context = CGContext(
+            data: nil,
+            width: width,
+            height: height,
+            bitsPerComponent: 8,
+            bytesPerRow: 0,
+            space: colorSpace,
+            bitmapInfo: bitmapInfo
+        ) else { return nil }
 
         context.interpolationQuality = .high
         context.setFillColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        context.fill(context.boundingBoxOfClipPath)
-        context.translateBy(x: 0.0, y: height)
-        context.scaleBy(x: dpi, y: -dpi)
-        context.saveGState()
+        context.fill(CGRect(x: 0, y: 0, width: width, height: height))
+        context.scaleBy(x: dpi, y: dpi)
+        if sourceRect.origin.x != 0 || sourceRect.origin.y != 0 {
+            context.translateBy(x: -sourceRect.origin.x, y: -sourceRect.origin.y)
+        }
         context.drawPDFPage(page)
-        context.restoreGState()
 
-        guard let image = UIGraphicsGetImageFromCurrentImageContext(),
-              let pngData = image.pngData() else { return nil }
-        try? pngData.write(to: URL(fileURLWithPath: imageFilePath), options: .atomic)
+        guard let cgImage = context.makeImage() else { return nil }
+
+        let destinationURL = URL(fileURLWithPath: imageFilePath) as CFURL
+        guard let destination = CGImageDestinationCreateWithURL(destinationURL, "public.png" as CFString, 1, nil) else {
+            return nil
+        }
+        CGImageDestinationAddImage(destination, cgImage, nil)
+        guard CGImageDestinationFinalize(destination) else {
+            return nil
+        }
+
         return imageFilePath
     }
 

@@ -15,4 +15,10 @@ build/
 /android/.gradle/
 /.flutter-plugins
 /.flutter-plugins-dependencies
-/ios/easy_pdf_viewer/.swiftpm/xcode/
+
+# Swift / Darwin / SPM / Xcode
+.build/
+.swiftpm/
+xcuserdata/
+DerivedData/
+*.xcuserstate
