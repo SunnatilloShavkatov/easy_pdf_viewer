@@ -1,3 +1,11 @@
+## 1.6.0
+
+- Replace the method channel with direct native calls: JNI (`jni`, `jnigen`) on Android and the Objective-C runtime (`objective_c`, `ffigen`) on iOS and macOS. `PDFDocument`'s public signatures are unchanged.
+- **Behavior change:** `getPage` throws on a native failure instead of returning `PDFPage(null)`; `fromFile`, `fromURL` and `fromAsset` throw `Exception('Error reading PDF!')`.
+- Fix `getAll()`, which requested a null page number; it now yields pages `1..pageCount`.
+- **iOS / macOS:** file paths with spaces open correctly.
+- **Android:** rendering runs on a background thread; all native code is Kotlin; `consumer-rules.pro` keeps the facade through R8; Gradle 9.5.0.
+
 ## 1.5.0
 
 - Add macOS platform support.
