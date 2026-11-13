@@ -1,39 +1,43 @@
 import 'dart:io';
 
 import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
-import 'package:flutter/services.dart';
+import 'package:easy_pdf_viewer/src/easy_pdf_viewer_platform.dart';
+import 'package:easy_pdf_viewer/src/native_bridge.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-void main() {
-  const MethodChannel channel = MethodChannel('easy_pdf_viewer_plugin');
+class _FakePlatform implements EasyPdfViewerPlatform {
+  final List<String> log = <String>[];
 
+  @override
+  Future<int> getNumberOfPages(String filePath, {required bool clearCacheDir}) async {
+    log.add('getNumberOfPages $filePath clear=$clearCacheDir');
+    return 5;
+  }
+
+  @override
+  Future<String?> getPage(String filePath, int pageNumber) async {
+    log.add('getPage $filePath $pageNumber');
+    return '/dummy/cache/path/EasyPdfViewer/test-$pageNumber.png';
+  }
+
+  @override
+  Future<void> clearCacheDir() async {
+    log.add('clearCacheDir');
+  }
+}
+
+void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  final List<MethodCall> log = <MethodCall>[];
+  late _FakePlatform fake;
 
   setUp(() {
-    log.clear();
-    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
-      channel,
-      (MethodCall methodCall) async {
-        log.add(methodCall);
-        switch (methodCall.method) {
-          case 'getNumberOfPages':
-            return '5';
-          case 'getPage':
-            final int pageNumber = (methodCall.arguments as Map<dynamic, dynamic>)['pageNumber'] as int;
-            return '/dummy/cache/path/EasyPdfViewer/test-$pageNumber.png';
-          case 'clearCacheDir':
-            return null;
-          default:
-            return null;
-        }
-      },
-    );
+    fake = _FakePlatform();
+    EasyPdfViewerPlatform.instance = fake;
   });
 
   tearDown(() {
-    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(channel, null);
+    EasyPdfViewerPlatform.instance = null;
   });
 
   test('PDFViewerTooltip has expected default strings', () {
@@ -46,12 +50,11 @@ void main() {
     expect(tooltip.jump, 'Jump');
   });
 
-  test('PDFDocument fromFile loads page count correctly via channel', () async {
+  test('PDFDocument fromFile loads page count correctly through the platform', () async {
     final PDFDocument doc = await PDFDocument.fromFile(File('/test/sample.pdf'));
     expect(doc.count, 5);
     expect(doc.filePath, '/test/sample.pdf');
-    expect(log.length, 1);
-    expect(log.first.method, 'getNumberOfPages');
+    expect(fake.log, <String>['getNumberOfPages /test/sample.pdf clear=true']);
   });
 
   test('PDFDocument get page returns valid PDFPage', () async {
@@ -61,8 +64,26 @@ void main() {
     expect(page.imgPath, '/dummy/cache/path/EasyPdfViewer/test-1.png');
   });
 
-  test('PDFDocument clearPreviewCache calls channel', () async {
+  test('PDFDocument clearPreviewCache calls the platform', () async {
     await PDFDocument.clearPreviewCache();
-    expect(log.any((call) => call.method == 'clearCacheDir'), isTrue);
+    expect(fake.log, <String>['clearCacheDir']);
   });
+
+  test('PDFDocument getAll streams every page in order', () async {
+    final PDFDocument doc = await PDFDocument.fromFile(File('/test/sample.pdf'));
+    final List<PDFPage?> pages = await doc.getAll().toList();
+    expect(pages.map((PDFPage? p) => p!.num), <int>[1, 2, 3, 4, 5]);
+    expect(fake.log.last, 'getPage /test/sample.pdf 5');
+  });
+
+  test('PDFDocument fromFile maps a native failure to Exception', () async {
+    EasyPdfViewerPlatform.instance = _FailingPlatform();
+    await expectLater(PDFDocument.fromFile(File('/missing.pdf')), throwsA(isA<Exception>()));
+  });
+}
+
+class _FailingPlatform extends _FakePlatform {
+  @override
+  Future<int> getNumberOfPages(String filePath, {required bool clearCacheDir}) =>
+      Future<int>.error(const NativeFailure(code: 'IO_ERROR', message: 'x'));
 }

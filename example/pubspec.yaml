@@ -4,20 +4,22 @@ publish_to: "none"
 description: "Demonstrates how to use the easy_pdf_viewer plugin."
 
 environment:
-  sdk: ">=3.13.0 <4.0.0"
-  flutter: ">=3.47.0"
+  sdk: ">=3.14.0 <4.0.0"
+  flutter: ">=3.50.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  material_ui: ^1.1.0
+  material_ui: ^1.11.0
   easy_pdf_viewer:
     path: ../
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  analysis_lints: ^1.1.0
+  integration_test:
+    sdk: flutter
+  analysis_lints: ^1.1.1
 
 flutter:
 

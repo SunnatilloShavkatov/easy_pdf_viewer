@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:easy_pdf_viewer/src/cache_manager.dart';
+import 'package:easy_pdf_viewer/src/easy_pdf_viewer_platform.dart';
 import 'package:easy_pdf_viewer/src/page.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:path_provider/path_provider.dart';
 
 class PDFDocument {
-  static const MethodChannel _channel = MethodChannel('easy_pdf_viewer_plugin');
-
   String? _filePath;
   late int count;
   final List<PDFPage> _pages = <PDFPage>[];
@@ -28,11 +28,7 @@ class PDFDocument {
   static Future<PDFDocument> fromFile(File file, {bool clearPreviewCache = true}) async {
     final PDFDocument document = PDFDocument().._filePath = file.path;
     try {
-      final pageCount = await _channel.invokeMethod('getNumberOfPages', <String, Object>{
-        'filePath': file.path,
-        'clearCacheDir': clearPreviewCache,
-      });
-      document.count = document.count = int.parse(pageCount);
+      document.count = await EasyPdfViewerPlatform.instance.getNumberOfPages(file.path, clearCacheDir: clearPreviewCache);
     } on Exception catch (_) {
       throw Exception('Error reading PDF!');
     }
@@ -61,11 +57,7 @@ class PDFDocument {
     final File f = await (cacheManager ?? DefaultCacheManager()).getSingleFile(url, headers: headers);
     final PDFDocument document = PDFDocument().._filePath = f.path;
     try {
-      final pageCount = await _channel.invokeMethod('getNumberOfPages', <String, dynamic>{
-        'filePath': f.path,
-        'clearCacheDir': clearPreviewCache,
-      });
-      document.count = document.count = int.parse(pageCount);
+      document.count = await EasyPdfViewerPlatform.instance.getNumberOfPages(f.path, clearCacheDir: clearPreviewCache);
     } on Exception catch (_) {
       throw Exception('Error reading PDF!');
     }
@@ -148,11 +140,7 @@ class PDFDocument {
     }
     final PDFDocument document = PDFDocument().._filePath = file.path;
     try {
-      final pageCount = await _channel.invokeMethod('getNumberOfPages', <String, dynamic>{
-        'filePath': file.path,
-        'clearCacheDir': clearPreviewCache,
-      });
-      document.count = document.count = int.parse(pageCount);
+      document.count = await EasyPdfViewerPlatform.instance.getNumberOfPages(file.path, clearCacheDir: clearPreviewCache);
     } on Exception catch (_) {
       throw Exception('Error reading PDF!');
     }
@@ -165,7 +153,7 @@ class PDFDocument {
   /// [fromURL], and [fromAsset], unless they are run with the
   /// `clearPreviewCache` parameter set to `false`.
   static Future<void> clearPreviewCache() async {
-    await _channel.invokeMethod('clearCacheDir');
+    await EasyPdfViewerPlatform.instance.clearCacheDir();
   }
 
   /// Load specific page
@@ -183,7 +171,7 @@ class PDFDocument {
     if (_preloaded && _pages.isNotEmpty) {
       return _pages[page - 1];
     }
-    final data = await _channel.invokeMethod('getPage', <String, Object?>{'filePath': _filePath, 'pageNumber': page});
+    final data = await EasyPdfViewerPlatform.instance.getPage(_filePath!, page);
     return PDFPage(
       data,
       page,
@@ -204,10 +192,7 @@ class PDFDocument {
   }) async {
     int countvar = 1;
     for (final void _ in List.filled(count, null)) {
-      final data = await _channel.invokeMethod('getPage', <String, Object?>{
-        'filePath': _filePath,
-        'pageNumber': countvar,
-      });
+      final data = await EasyPdfViewerPlatform.instance.getPage(_filePath!, countvar);
       _pages.add(
         PDFPage(
           data,
@@ -225,13 +210,10 @@ class PDFDocument {
   }
 
   // Stream all pages
-  Stream<PDFPage?> getAll({void Function(double)? onZoomChanged}) =>
-      Future.forEach<PDFPage?>(List<PDFPage?>.filled(count, null), (PDFPage? i) async {
-            final data = await _channel.invokeMethod('getPage', <String, Object?>{
-              'filePath': _filePath,
-              'pageNumber': i,
-            });
-            return PDFPage(data, 1, onZoomChanged: onZoomChanged);
-          }).asStream()
-          as Stream<PDFPage?>;
+  Stream<PDFPage?> getAll({void Function(double)? onZoomChanged}) async* {
+    for (int page = 1; page <= count; page++) {
+      final data = await EasyPdfViewerPlatform.instance.getPage(_filePath!, page);
+      yield PDFPage(data, page, onZoomChanged: onZoomChanged);
+    }
+  }
 }

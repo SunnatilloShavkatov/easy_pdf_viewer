@@ -17,10 +17,21 @@ let package = Package(
     ],
     targets: [
         .target(
+            name: "easy_pdf_viewer_c",
+            path: "Sources/easy_pdf_viewer_c",
+            publicHeadersPath: "include",
+            cSettings: [
+                .headerSearchPath("."),
+                .headerSearchPath("include")
+            ]
+        ),
+        .target(
             name: "easy_pdf_viewer",
             dependencies: [
-                .product(name: "FlutterFramework", package: "FlutterFramework")
+                .product(name: "FlutterFramework", package: "FlutterFramework"),
+                "easy_pdf_viewer_c"
             ],
+            path: "Sources/easy_pdf_viewer",
             resources: [
                 .process("Resources")
             ]
