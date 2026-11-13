@@ -13,16 +13,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlin {
-        compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
-        }
-    }
-
-    sourceSets {
-        getByName("main").java.srcDirs("src/main/kotlin")
-    }
-
     defaultConfig {
         applicationId = "com.aboutkai.easy_pdf_viewer_example"
         minSdk = 26
@@ -41,6 +31,12 @@ android {
         jniLibs {
             useLegacyPackaging = true
         }
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
     }
 }
 
