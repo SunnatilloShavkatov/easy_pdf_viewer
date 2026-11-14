@@ -16,10 +16,7 @@ Future<void> main() async {
   await JniGenerator(
     input: Input(
       classPath: <Uri>[classes],
-      classes: <String>[
-        'uz.plugin.easy_pdf_viewer.EasyPdfViewerApi',
-        'uz.plugin.easy_pdf_viewer.ResultCallback',
-      ],
+      classes: <String>['uz.plugin.easy_pdf_viewer.EasyPdfViewerApi', 'uz.plugin.easy_pdf_viewer.ResultCallback'],
       backend: SummarizerBackend.asm,
     ),
     output: Output(

@@ -5,7 +5,6 @@
 build/
 .idea
 /pubspec.lock
-/.github/
 /example/android/.settings/
 /example/ios/Podfile.lock
 /example/pubspec.lock

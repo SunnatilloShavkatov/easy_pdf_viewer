@@ -13,11 +13,8 @@ class DarwinEasyPdfViewer implements EasyPdfViewerPlatform {
   @override
   Future<int> getNumberOfPages(String filePath, {required bool clearCacheDir}) async {
     final String? count = await callNative(
-      (ResultBlock callback) => EasyPdfViewerApi.getNumberOfPages(
-        filePath.toNSString(),
-        clearCacheDir: clearCacheDir,
-        callback: callback,
-      ),
+      (ResultBlock callback) =>
+          EasyPdfViewerApi.getNumberOfPages(filePath.toNSString(), clearCacheDir: clearCacheDir, callback: callback),
     );
     return int.parse(count!);
   }

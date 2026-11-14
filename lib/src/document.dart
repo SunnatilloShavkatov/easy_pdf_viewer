@@ -28,7 +28,10 @@ class PDFDocument {
   static Future<PDFDocument> fromFile(File file, {bool clearPreviewCache = true}) async {
     final PDFDocument document = PDFDocument().._filePath = file.path;
     try {
-      document.count = await EasyPdfViewerPlatform.instance.getNumberOfPages(file.path, clearCacheDir: clearPreviewCache);
+      document.count = await EasyPdfViewerPlatform.instance.getNumberOfPages(
+        file.path,
+        clearCacheDir: clearPreviewCache,
+      );
     } on Exception catch (_) {
       throw Exception('Error reading PDF!');
     }
@@ -140,7 +143,10 @@ class PDFDocument {
     }
     final PDFDocument document = PDFDocument().._filePath = file.path;
     try {
-      document.count = await EasyPdfViewerPlatform.instance.getNumberOfPages(file.path, clearCacheDir: clearPreviewCache);
+      document.count = await EasyPdfViewerPlatform.instance.getNumberOfPages(
+        file.path,
+        clearCacheDir: clearPreviewCache,
+      );
     } on Exception catch (_) {
       throw Exception('Error reading PDF!');
     }
