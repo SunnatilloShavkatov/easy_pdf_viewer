@@ -1,3 +1,9 @@
+## 1.6.1
+
+- Declare `ffi` in `pubspec.yaml`; the generated Darwin bindings import it, so pub.dev validation rejected the package.
+- Apply `dart format` to the Dart sources so the CI format check passes.
+- CI: unified workflow aligned with audio_player.
+
 ## 1.6.0
 
 - Replace the method channel with direct native calls: JNI (`jni`, `jnigen`) on Android and the Objective-C runtime (`objective_c`, `ffigen`) on iOS and macOS. `PDFDocument`'s public signatures are unchanged.
