@@ -10,6 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  ffi: ^2.2.0
   jni: ^1.1.2
   material_ui: ^1.11.0
   objective_c: ^9.6.4
